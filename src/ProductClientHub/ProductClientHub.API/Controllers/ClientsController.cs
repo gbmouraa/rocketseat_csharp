@@ -1,4 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using ProductClientHub.API.UseCases.Clients.Register;
+using ProductClientHub.Communication.Requests;
+using ProductClientHub.Communication.Responses;
 
 namespace ProductClientHub.API.Controllers
 {
@@ -7,9 +10,26 @@ namespace ProductClientHub.API.Controllers
     public class ClientsController : ControllerBase
     {
         [HttpPost]
-        public IActionResult Register()
+        [ProducesResponseType(typeof(ResponseClientJson), StatusCodes.Status201Created)] // documenta o retorno do endpoint no swagger/ferramentas padrão OpenApi
+        [ProducesResponseType(typeof(ResponseErrorMessageJson), StatusCodes.Status400BadRequest)]
+        public IActionResult Register([FromBody] RequestClientJson request)
         {
-            return Ok();
+            try
+            {
+                var useCase = new RegisterClientUseCase();
+
+                var response = useCase.Execute(request); // executa a requisição - valida os dados - lança exeção
+
+                return Created(string.Empty, response);
+            }
+            catch (ArgumentException ex) // captura a exeção definida no useCase
+            {
+                return BadRequest(new ResponseErrorMessageJson(ex.Message));
+            }
+            catch // captura qualquer outra exeção
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new ResponseErrorMessageJson("ERRO DESCONHECIDO"));
+            }
         }
 
         [HttpPut]
@@ -26,9 +46,9 @@ namespace ProductClientHub.API.Controllers
 
         [HttpGet]
         [Route("{id}")]
-        public IActionResult GetById(Guid id)
+        public IActionResult GetById([FromRoute] Guid id)
         {
-            return Ok("Hello World");
+            return Ok();
         }
 
         [HttpDelete]
