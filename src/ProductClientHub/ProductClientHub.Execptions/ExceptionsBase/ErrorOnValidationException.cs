@@ -1,4 +1,5 @@
 ﻿using ProductClientHub.Execptions.ExecptionsBase;
+using System.Net;
 
 namespace ProductClientHub.Execptions.ExceptionsBase
 {
@@ -13,5 +14,8 @@ namespace ProductClientHub.Execptions.ExceptionsBase
 
         // override para sobescrever o método da classe herdada
         public override List<string> GetErrors() => _erros;
+
+        public override HttpStatusCode GetHttpStatusCode() => HttpStatusCode.BadRequest;
+
     }
 }
