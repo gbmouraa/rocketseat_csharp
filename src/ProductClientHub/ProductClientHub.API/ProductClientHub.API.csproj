@@ -17,8 +17,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ProductClientHub.Communication\ProductClientHub.Communication.csproj" />
-    <ProjectReference Include="..\ProductClientHub.Execptions\ProductClientHub.Exceptions.csproj" />
-    <ProjectReference Include="..\ProductClientHub.Execptions\ProductClientHub.Execptions.csproj" />
+	  <ProjectReference Include="..\ProductClientHub.Execptions\ProductClientHub.Exceptions.csproj" />
   </ItemGroup>
 
 </Project>

@@ -11,8 +11,9 @@ namespace ProductClientHub.API.Infrastructure
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlite("Data Source=C:\\snaps\\ProductClientHubDB.octet-stream");
+            optionsBuilder.UseSqlite("Data Source=C:\\Users\\Gabriel\\Documents\\ProductCLientHubDB.octet-stream");
         }
 
     }
 }
+
