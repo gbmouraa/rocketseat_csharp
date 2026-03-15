@@ -4,7 +4,6 @@ using ProductClientHub.API.UseCases.Clients.Validator;
 using ProductClientHub.Communication.Requests;
 using ProductClientHub.Communication.Responses;
 using ProductClientHub.Execptions.ExceptionsBase;
-using System.ComponentModel.DataAnnotations;
 
 namespace ProductClientHub.API.UseCases.Clients.Register
 {
