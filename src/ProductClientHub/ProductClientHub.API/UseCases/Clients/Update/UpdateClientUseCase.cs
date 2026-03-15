@@ -1,27 +1,30 @@
-﻿using ProductClientHub.API.Entities;
-using ProductClientHub.API.Infrastructure;
+﻿using ProductClientHub.API.Infrastructure;
 using ProductClientHub.API.UseCases.Clients.Validator;
 using ProductClientHub.Communication.Requests;
-using ProductClientHub.Communication.Responses;
+using ProductClientHub.Exceptions.ExceptionsBase;
 using ProductClientHub.Execptions.ExceptionsBase;
-using System.ComponentModel.DataAnnotations;
 
-namespace ProductClientHub.API.UseCases.Clients.Register
+namespace ProductClientHub.API.UseCases.Clients.Update
 {
-    public class RegisterClientUseCase
+    public class UpdateClientUseCase
     {
-        public ResponseShortClientJson Execute(RequestClientJson request)
+        public void Execute(Guid id, RequestClientJson request)
         {
             Validate(request);
 
             var dbContext = new ProductClientHubDbContext();
 
-            Client entity = new Client { Name = request.Name, Email = request.Email };
+            var client = dbContext.Clients.FirstOrDefault(c => c.Id == id);
+            if (client == null)
+            {
+                throw new NotFoundException("Usuario nao encontraddo");
+            }
 
-            dbContext.Add(entity);
+            client.Name = request.Name;
+            client.Email = request.Email;
+
+            dbContext.Update(client);
             dbContext.SaveChanges();
-
-            return new ResponseShortClientJson { Id = entity.Id, Name = entity.Name };
         }
 
         private void Validate(RequestClientJson request)

@@ -9,7 +9,7 @@ namespace ProductClientHub.API.UseCases.Clients.GetAll
         {
             var dbContext = new ProductClientHubDbContext();
 
-            var clients = dbContext.Clients.ToList();
+            var clients = dbContext.Clients.ToList(); 
 
             return new ResponseAllClientsJson
             {

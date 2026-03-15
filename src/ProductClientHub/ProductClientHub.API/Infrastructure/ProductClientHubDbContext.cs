@@ -10,7 +10,7 @@ namespace ProductClientHub.API.Infrastructure
         public DbSet<Product> Products { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
+        {                           // adicioanr essa connection string em AppSettings.Local
             optionsBuilder.UseSqlite("Data Source=C:\\Users\\Gabriel\\Documents\\ProductCLientHubDB.octet-stream");
         }
 

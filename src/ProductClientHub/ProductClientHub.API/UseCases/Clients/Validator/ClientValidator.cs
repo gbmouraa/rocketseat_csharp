@@ -1,12 +1,11 @@
 ﻿using FluentValidation;
 using ProductClientHub.Communication.Requests;
 
-namespace ProductClientHub.API.UseCases.Clients.Register
+namespace ProductClientHub.API.UseCases.Clients.Validator
 {
-    public class RegisterClientValidator : AbstractValidator<RequestClientJson>
+    public class ClientValidator : AbstractValidator<RequestClientJson>
     {
-        // adiciona as validações para RequestClientJson
-        public RegisterClientValidator()
+        public ClientValidator()
         {
             RuleFor(client => client.Name).NotEmpty().WithMessage("O nome não pode ser vazio.");
             RuleFor(client => client.Email).EmailAddress().WithMessage("O e-mail não é valido.");
