@@ -4,6 +4,7 @@ using ProductClientHub.Communication.Requests;
 using ProductClientHub.Communication.Responses;
 using ProductClientHub.Exceptions.ExceptionsBase;
 using ProductClientHub.API.Entities;
+using ProductClientHub.Execptions.ExceptionsBase;
 
 namespace ProductClientHub.API.UseCases.Products.Register
 {
@@ -49,7 +50,7 @@ namespace ProductClientHub.API.UseCases.Products.Register
             if (!validationResult.IsValid)
             {
                 var errors = validationResult.Errors.Select(x => x.ErrorMessage).ToList();
-                throw new Exception(string.Join(Environment.NewLine, errors));
+                throw new ErrorOnValidationException(errors);
             }
         }
     }

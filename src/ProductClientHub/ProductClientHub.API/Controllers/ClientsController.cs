@@ -1,8 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using ProductClientHub.API.UseCases.Clients;
 using ProductClientHub.API.UseCases.Clients.GetAll;
+using ProductClientHub.API.UseCases.Clients.GetById;
 using ProductClientHub.API.UseCases.Clients.Register;
 using ProductClientHub.API.UseCases.Clients.Update;
+using ProductClientHub.API.UseCases.Products.Delete;
 using ProductClientHub.Communication.Requests;
 using ProductClientHub.Communication.Responses;
 
@@ -57,8 +58,8 @@ namespace ProductClientHub.API.Controllers
 
         [HttpGet]
         [Route("{id}")]
-        [ProducesResponseType(typeof(ResponseShortClientJson), StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(typeof(ResponseClientJson), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ResponseErrorMessageJson), StatusCodes.Status404NotFound)]
         public IActionResult GetById([FromRoute] Guid id)
         {
             var useCase = new GetClientByIdUseCase();
@@ -69,9 +70,16 @@ namespace ProductClientHub.API.Controllers
         }
 
         [HttpDelete]
-        public IActionResult Delete()
+        [Route("{clientId}")]
+        [ProducesResponseType(typeof(ResponseErrorMessageJson), StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        public IActionResult Delete([FromRoute] Guid clientId)
         {
-            return Ok();
+            var useCase = new DeleteClientUseCase();
+
+            useCase.Execute(clientId);
+
+            return NoContent();
         }
     }
 }

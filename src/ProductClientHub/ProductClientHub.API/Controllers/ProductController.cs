@@ -1,9 +1,8 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using ProductClientHub.API.UseCases.Products.Delete;
 using ProductClientHub.API.UseCases.Products.Register;
 using ProductClientHub.Communication.Requests;
 using ProductClientHub.Communication.Responses;
-using ProductClientHub.Exceptions.ExceptionsBase;
 
 namespace ProductClientHub.API.Controllers
 {
@@ -15,14 +14,27 @@ namespace ProductClientHub.API.Controllers
         [Route("{clientId}")]
         [ProducesResponseType(typeof(ResponseShortProductJson), StatusCodes.Status201Created)] // documenta o retorno do endpoint no swagger/ferramentas padrão OpenApi
         [ProducesResponseType(typeof(ResponseErrorMessageJson), StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(typeof(NotFoundException), StatusCodes.Status404NotFound)]
-        public IActionResult Register([FromRoute] Guid clientId, RequestProductJson request)
+        [ProducesResponseType(typeof(ResponseErrorMessageJson), StatusCodes.Status404NotFound)]
+        public IActionResult Register([FromRoute] Guid clientId, [FromBody] RequestProductJson request)
         {
             var useCase = new RegisterProductUseCase();
 
             var response = useCase.Execute(clientId, request);
 
             return Created("", response);
+        }
+
+        [HttpDelete]
+        [Route("{productId}")]
+        [ProducesResponseType(typeof(ResponseErrorMessageJson), StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        public IActionResult Delete([FromRoute] Guid productId)
+        {
+            var useCase = new DeleteProductUseCase();
+
+            useCase.Execute(productId);
+
+            return NoContent();
         }
     }
 }
