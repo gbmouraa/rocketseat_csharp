@@ -2,6 +2,7 @@
 {
     public class ResponseErrorMessageJson
     {
+        // esse erro esta sendo documentado no swagger
         public List<string> Errors { get; private set; }
 
         public ResponseErrorMessageJson(string message)
