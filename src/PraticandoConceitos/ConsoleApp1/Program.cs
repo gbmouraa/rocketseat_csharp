@@ -3,7 +3,7 @@
 
 Desafio.Execute();
 
-static public class Desafio
+public static class Desafio
 {
     public static void Execute()
     {

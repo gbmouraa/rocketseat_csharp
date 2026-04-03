@@ -7,7 +7,7 @@
 
 Desafio.Execute();
 
-static public class Desafio
+public static class Desafio
 {
     public static void Soma(double n1, double n2) => Console.WriteLine($"Soma: {n1 + n2}");
     public static void Subtrai(double n1, double n2) => Console.WriteLine($"Subtração: {n1 - n2}");
