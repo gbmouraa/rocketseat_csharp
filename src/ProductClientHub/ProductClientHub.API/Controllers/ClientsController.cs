@@ -16,7 +16,8 @@ namespace ProductClientHub.API.Controllers
         [HttpPost]
         [ProducesResponseType(typeof(ResponseShortClientJson), StatusCodes.Status201Created)] // documenta o retorno do endpoint no swagger/ferramentas padrão OpenApi
         [ProducesResponseType(typeof(ResponseErrorMessageJson), StatusCodes.Status400BadRequest)]
-        public IActionResult Register([FromBody] RequestClientJson request)
+        // Boa pratica de tipagem
+        public ActionResult<ResponseShortClientJson> Register([FromBody] RequestClientJson request)
         {
             var useCase = new RegisterClientUseCase();
 
