@@ -1,4 +1,5 @@
 ﻿using CashFlow.Communication.Requests;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CashFlow.Api.Controllers
@@ -7,6 +8,7 @@ namespace CashFlow.Api.Controllers
     [ApiController]
     public class ExpensesController : ControllerBase
     {
+        [HttpPost]
         public ActionResult Register([FromBody] RequestExpenseJson request)
         {
             return Ok();
