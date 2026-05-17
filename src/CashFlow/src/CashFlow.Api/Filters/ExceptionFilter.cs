@@ -26,7 +26,7 @@ namespace CashFlow.Api.Filters
         private void ThrowUnknowException(ExceptionContext context)
         {
             context.HttpContext.Response.StatusCode = StatusCodes.Status500InternalServerError;
-            context.Result = new ObjectResult(new ResponseErrorMessageJson("ERRO DESCONHECIDO"));
+            context.Result = new ObjectResult(new ResponseErrorMessageJson(ResourceErrorMessages.UNKNOW_ERROR));
         }
     }
 }
