@@ -2,31 +2,35 @@
 using CashFlow.Communication.Requests;
 using CashFlow.Communication.Responses;
 using CashFlow.Domain.Entities;
+using CashFlow.Domain.Repositories.Expense;
 using CashFlow.Exceptions;
-using CashFlow.Infrastructure.DataAccess;
 
 namespace CashFlow.Application.UseCases.Expenses.Register
 {
-    public class RegisterExpenseUseCase
+    public class RegisterExpenseUseCase : IRegisterExpenseUseCase
     {
+        private readonly IExpenseRepository _expenseRepository;
+
+        // aqui ocorre o new de uma instancia por debaixo dos panos
+        public RegisterExpenseUseCase(IExpenseRepository expenseRepository)
+        {
+            _expenseRepository = expenseRepository;
+        }
+
         public ResponseRegisterExpenseJson Execute(RequestRegisterExpenseJson request)
         {
             Validate(request);
-
-            var dbContext = new CashFlowDbContext();
 
             var entity = new Expense
             {
                 Title = request.Title,
                 Date = request.Date,
                 Description = request.Description,
-                PaymentType = (CashFlow.Domain.Enums.EnumPaymentType)request.PaymentType,
+                PaymentType = (Domain.Enums.EnumPaymentType)request.PaymentType,
                 Amount = request.Amount,
             };
 
-            dbContext.Add(entity);
-            dbContext.SaveChanges();
-
+            _expenseRepository.Add(entity);
             return new ResponseRegisterExpenseJson { Title = request.Title };
         }
 
