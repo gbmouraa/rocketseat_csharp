@@ -16,7 +16,7 @@ builder.Services.AddRouting(options => options.LowercaseUrls = true);
 
 builder.Services.AddMvc(options => options.Filters.Add(typeof(ExceptionFilter)));
 
-builder.Services.AddInfrastructure(); // AddInfrastructure recebe Service implicitamente
+builder.Services.AddInfrastructure(builder.Configuration); // AddInfrastructure recebe Service implicitamente
 builder.Services.AddApplication();
 
 var app = builder.Build();
