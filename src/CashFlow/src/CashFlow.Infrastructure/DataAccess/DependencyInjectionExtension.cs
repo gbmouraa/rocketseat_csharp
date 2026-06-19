@@ -8,7 +8,18 @@ namespace CashFlow.Infrastructure.DataAccess
     {
         public static void AddInfrastructure(this IServiceCollection service)
         {
+            AddExpenseRepository(service);
+            AddDbContext(service);
+        }
+
+        private static void AddExpenseRepository(IServiceCollection service)
+        {
             service.AddScoped<IExpenseRepository, ExpenseRepository>();
+        }
+
+        private static void AddDbContext(IServiceCollection service)
+        {
+            service.AddDbContext<CashFlowDbContext>();
         }
     }
 }
