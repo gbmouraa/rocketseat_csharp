@@ -1,9 +1,9 @@
-﻿using CashFlow.Domain.Repositories.Expense;
+﻿using CashFlow.Domain.Repositories;
+using CashFlow.Domain.Repositories.Expense;
 using CashFlow.Infrastructure.DataAccess.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Options;
 
 namespace CashFlow.Infrastructure.DataAccess
 {
@@ -11,13 +11,14 @@ namespace CashFlow.Infrastructure.DataAccess
     {
         public static void AddInfrastructure(this IServiceCollection service, IConfiguration config)
         {
-            AddExpenseRepository(service);
-            AddDbContext(service,config);
+            AddRepositories(service);
+            AddDbContext(service, config);
         }
 
-        private static void AddExpenseRepository(IServiceCollection service)
+        private static void AddRepositories(IServiceCollection service)
         {
             service.AddScoped<IExpenseRepository, ExpenseRepository>();
+            service.AddScoped<IUnitOfWork, UnitOfWork>();
         }
 
         private static void AddDbContext(IServiceCollection service, IConfiguration config)
@@ -25,7 +26,7 @@ namespace CashFlow.Infrastructure.DataAccess
             var connectionString = config.GetConnectionString("Connection");
             var serverVersion = new MySqlServerVersion(new Version(8, 0, 47));
 
-            service.AddDbContext<CashFlowDbContext>(config => config.UseMySql(connectionString,serverVersion));
+            service.AddDbContext<CashFlowDbContext>(config => config.UseMySql(connectionString, serverVersion));
         }
     }
 }

@@ -7,7 +7,8 @@ namespace CashFlow.Application
     {
         public static void AddApplication(this IServiceCollection service)
         {
-            // quando IRegisterExpenseUseCase for implementado cria uma instancia de RegisterExpenseUseCase
+            // quando uma classe recebe um parametro do tipo IRegisterExpenseUseCase
+            // é usado uma instancia de RegisterExpenseUseCase através da injeção de dependencias
             service.AddScoped<IRegisterExpenseUseCase, RegisterExpenseUseCase>();
         }
     }

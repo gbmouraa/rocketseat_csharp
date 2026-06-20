@@ -11,7 +11,7 @@ namespace CashFlow.Application.UseCases.Expenses.Register
     {
         private readonly IExpenseRepository _expenseRepository;
 
-        // aqui ocorre o new de uma instancia por debaixo dos panos
+        // aqui ocorre o new de uma instancia por debaixo dos panos atraves da injecção de dependencias
         public RegisterExpenseUseCase(IExpenseRepository expenseRepository)
         {
             _expenseRepository = expenseRepository;
