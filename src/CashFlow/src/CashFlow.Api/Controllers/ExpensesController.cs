@@ -12,10 +12,10 @@ namespace CashFlow.Api.Controllers
         [HttpPost]
         [ProducesResponseType(typeof(ResponseRegisterExpenseJson), StatusCodes.Status201Created)]
         [ProducesResponseType(typeof(ResponseErrorMessageJson), StatusCodes.Status400BadRequest)]
-        public ActionResult Register([FromBody] RequestRegisterExpenseJson request,
-            [FromServices] IRegisterExpenseUseCase useCase) // uma das possibilidades de usar um serviço
+        public async Task<ActionResult> Register([FromBody] RequestRegisterExpenseJson request,
+            [FromServices] IRegisterExpenseUseCase useCase) // uma das possibilidades de usar um serviço, usa a instancia da injeção de dependencias
         {
-            var response = useCase.Execute(request);
+            var response = await useCase.Execute(request);
             return Created(string.Empty, response);
         }
     }

@@ -2,6 +2,6 @@
 {
     public interface IExpenseRepository
     {
-        void Add(Entities.Expense expense);
+        Task Add(Entities.Expense expense);
     }
 }
