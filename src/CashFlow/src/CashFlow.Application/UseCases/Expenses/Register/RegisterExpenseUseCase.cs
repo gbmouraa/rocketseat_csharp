@@ -3,6 +3,7 @@ using CashFlow.Communication.Requests;
 using CashFlow.Communication.Responses;
 using CashFlow.Domain.Entities;
 using CashFlow.Domain.Repositories.Expense;
+using CashFlow.Domain.Repositories;
 using CashFlow.Exceptions;
 
 namespace CashFlow.Application.UseCases.Expenses.Register
@@ -10,11 +11,13 @@ namespace CashFlow.Application.UseCases.Expenses.Register
     public class RegisterExpenseUseCase : IRegisterExpenseUseCase
     {
         private readonly IExpenseRepository _expenseRepository;
+        private readonly IUnitOfWork _unitOfWork;
 
-        // aqui ocorre o new de uma instancia por debaixo dos panos atraves da injecção de dependencias
-        public RegisterExpenseUseCase(IExpenseRepository expenseRepository)
+        // aqui e usado a instancia criada a partir da injecção de dependencias
+        public RegisterExpenseUseCase(IExpenseRepository expenseRepository, IUnitOfWork unitOfWork)
         {
             _expenseRepository = expenseRepository;
+            _unitOfWork = unitOfWork;
         }
 
         public ResponseRegisterExpenseJson Execute(RequestRegisterExpenseJson request)
@@ -31,6 +34,7 @@ namespace CashFlow.Application.UseCases.Expenses.Register
             };
 
             _expenseRepository.Add(entity);
+            _unitOfWork.Commit();
             return new ResponseRegisterExpenseJson { Title = request.Title };
         }
 
