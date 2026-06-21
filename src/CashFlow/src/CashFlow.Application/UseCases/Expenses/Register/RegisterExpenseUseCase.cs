@@ -1,9 +1,9 @@
-﻿using CashFlow.Communication.Enums;
+﻿using AutoMapper;
 using CashFlow.Communication.Requests;
 using CashFlow.Communication.Responses;
 using CashFlow.Domain.Entities;
-using CashFlow.Domain.Repositories.Expense;
 using CashFlow.Domain.Repositories;
+using CashFlow.Domain.Repositories.Expense;
 using CashFlow.Exceptions;
 
 namespace CashFlow.Application.UseCases.Expenses.Register
@@ -12,26 +12,21 @@ namespace CashFlow.Application.UseCases.Expenses.Register
     {
         private readonly IExpenseRepository _expenseRepository;
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IMapper _mapper;
 
         // aqui e usado a instancia criada a partir da injecção de dependencias
-        public RegisterExpenseUseCase(IExpenseRepository expenseRepository, IUnitOfWork unitOfWork)
+        public RegisterExpenseUseCase(IExpenseRepository expenseRepository, IUnitOfWork unitOfWork, IMapper mapper)
         {
             _expenseRepository = expenseRepository;
             _unitOfWork = unitOfWork;
+            _mapper = mapper;
         }
 
         public async Task<ResponseRegisterExpenseJson> Execute(RequestRegisterExpenseJson request)
         {
             Validate(request);
 
-            var entity = new Expense
-            {
-                Title = request.Title,
-                Date = request.Date,
-                Description = request.Description,
-                PaymentType = (Domain.Enums.EnumPaymentType)request.PaymentType,
-                Amount = request.Amount,
-            };
+            var entity = _mapper.Map<Expense>(request);
 
             await _expenseRepository.Add(entity);
             await _unitOfWork.Commit();
