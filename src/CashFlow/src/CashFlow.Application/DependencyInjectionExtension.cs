@@ -1,4 +1,6 @@
 ﻿using CashFlow.Application.AutoMapper;
+using CashFlow.Application.UseCases.Expenses.GetAll;
+using CashFlow.Application.UseCases.Expenses.GetById;
 using CashFlow.Application.UseCases.Expenses.Register;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -17,6 +19,8 @@ namespace CashFlow.Application
             // quando uma classe recebe um parametro do tipo IRegisterExpenseUseCase
             // é usado uma instancia de RegisterExpenseUseCase através da injeção de dependencias
             service.AddScoped<IRegisterExpenseUseCase, RegisterExpenseUseCase>();
+            service.AddScoped<IGetAllExpensesUseCase, GetAllExpensesUseCase>();
+            service.AddScoped<IGetExpenseByIdUseCase, GetExpenseByIdUseCase>();
         }
 
         private static void AddAutoMapper(IServiceCollection service)
