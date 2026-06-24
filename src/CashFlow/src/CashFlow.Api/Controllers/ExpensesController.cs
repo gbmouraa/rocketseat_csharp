@@ -37,7 +37,7 @@ namespace CashFlow.Api.Controllers
         [HttpGet]
         [Route("{id}")]
         [ProducesResponseType(typeof(ResponseFullExpenseJson), StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(typeof(ResponseErrorMessageJson), StatusCodes.Status404NotFound)]
         public async Task<ActionResult> GetById([FromServices] IGetExpenseByIdUseCase useCase, [FromRoute] long id)
         {
             var response = await useCase.Execute(id);

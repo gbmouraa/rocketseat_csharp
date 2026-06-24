@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using CashFlow.Communication.Responses;
 using CashFlow.Domain.Repositories.Expense;
+using CashFlow.Exceptions;
 
 namespace CashFlow.Application.UseCases.Expenses.GetById
 {
@@ -18,6 +19,11 @@ namespace CashFlow.Application.UseCases.Expenses.GetById
         public async Task<ResponseFullExpenseJson> Execute(long id)
         {
             var result = await _repository.GetById(id);
+
+            if (result == null)
+            {
+                throw new NotFoundException("Não foi encontrada nenhuma oferta para o Id informado.");
+            }
 
             return _mapper.Map<ResponseFullExpenseJson>(result);
         }
