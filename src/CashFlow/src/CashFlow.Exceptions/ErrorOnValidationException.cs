@@ -4,7 +4,7 @@ namespace CashFlow.Exceptions
 {
     public class ErrorOnValidationException : CashFlowException
     {
-        public List<string> Errors { get; set; }
+        private readonly List<string> Errors;
 
         public ErrorOnValidationException(List<string> messages) : base(string.Empty)
         {

@@ -22,7 +22,7 @@ namespace CashFlow.Application.UseCases.Expenses.GetById
 
             if (result == null)
             {
-                throw new NotFoundException("Não foi encontrada nenhuma oferta para o Id informado.");
+                throw new NotFoundException(ResourceErrorMessages.EXPENSE_NOT_FOUND);
             }
 
             return _mapper.Map<ResponseFullExpenseJson>(result);

@@ -70,6 +70,15 @@ namespace CashFlow.Exceptions {
         }
         
         /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Não foi encontrado nenhuma despesa com o Id informado..
+        /// </summary>
+        public static string EXPENSE_NOT_FOUND {
+            get {
+                return ResourceManager.GetString("EXPENSE_NOT_FOUND", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a Data não pode estar a frente da data atual..
         /// </summary>
         public static string INVALID_DATE {

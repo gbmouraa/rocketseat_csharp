@@ -120,6 +120,9 @@
   <data name="AMOUNT_MUST_BE_GREATER_THEN_ZERO" xml:space="preserve">
     <value>O valor deve ser maior que zero.</value>
   </data>
+  <data name="EXPENSE_NOT_FOUND" xml:space="preserve">
+    <value>Não foi encontrado nenhuma despesa com o Id informado.</value>
+  </data>
   <data name="INVALID_DATE" xml:space="preserve">
     <value>Data não pode estar a frente da data atual.</value>
   </data>
