@@ -13,7 +13,7 @@ namespace CashFlow.Application.AutoMapper
             EntityToResponse();
         }
 
-        private void RequestToEntity() => CreateMap<RequestRegisterExpenseJson, Expense>();
+        private void RequestToEntity() => CreateMap<RequestExpenseJson, Expense>();
 
         private void EntityToResponse()
         {

@@ -1,37 +1,41 @@
 ﻿using AutoMapper;
 using CashFlow.Communication.Requests;
-using CashFlow.Communication.Responses;
-using CashFlow.Domain.Entities;
 using CashFlow.Domain.Repositories;
 using CashFlow.Domain.Repositories.Expense;
 using CashFlow.Exceptions;
 
-namespace CashFlow.Application.UseCases.Expenses.Register
+namespace CashFlow.Application.UseCases.Expenses.Update
 {
-    public class RegisterExpenseUseCase : IRegisterExpenseUseCase
+    public class UpdateExpenseUseCase : IUpdateExpenseUseCase
     {
+        private readonly IMapper _mapper;
         private readonly IExpenseRepository _repository;
         private readonly IUnitOfWork _unitOfWork;
-        private readonly IMapper _mapper;
 
-        // aqui e usado a instancia criada a partir da injecção de dependencias
-        public RegisterExpenseUseCase(IExpenseRepository repository, IUnitOfWork unitOfWork, IMapper mapper)
+        public UpdateExpenseUseCase(IMapper mapper, IExpenseRepository repository, IUnitOfWork unitOfWork)
         {
+            _mapper = mapper;
             _repository = repository;
             _unitOfWork = unitOfWork;
-            _mapper = mapper;
         }
 
-        public async Task<ResponseRegisterExpenseJson> Execute(RequestExpenseJson request)
+        public async Task Execute(long id, RequestExpenseJson request)
         {
             Validate(request);
 
-            var entity = _mapper.Map<Expense>(request);
+            var expense = await _repository.GetById(id);
 
-            await _repository.Add(entity);
+            if (expense is null)
+            {
+                throw new NotFoundException(ResourceErrorMessages.EXPENSE_NOT_FOUND);
+            }
+
+            _mapper.Map(request, expense); // mapea a entidade atual
+            _repository.Update(expense);
             await _unitOfWork.Commit();
 
-            return _mapper.Map<ResponseRegisterExpenseJson>(entity);
+            // mapea para uma nova instância de Expense
+            //_mapper.Map<Expense>(request);
         }
 
         private void Validate(RequestExpenseJson request)

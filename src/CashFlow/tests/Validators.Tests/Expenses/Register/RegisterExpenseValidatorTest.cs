@@ -1,9 +1,8 @@
-﻿using CashFlow.Application.UseCases.Expenses.Register;
+﻿using CashFlow.Application.UseCases.Expenses;
 using CashFlow.Communication.Enums;
 using CashFlow.Exceptions;
 using CommonTestUtils;
 using Shouldly;
-using System.Collections.Frozen;
 
 namespace Validators.Tests.Expenses.Register
 {
@@ -13,7 +12,7 @@ namespace Validators.Tests.Expenses.Register
         public void Success()
         {
             // Arrange
-            var validator = new RegisterExpenseValidator();
+            var validator = new ExpenseValidator();
             var expenseRequest = RequestRegisterExpenseJsonBuilder.Build();
 
             // Act
@@ -30,7 +29,7 @@ namespace Validators.Tests.Expenses.Register
         public void Error_Title_Empty(string title)
         {
             // Arrange
-            var validator = new RegisterExpenseValidator();
+            var validator = new ExpenseValidator();
             var expenseRequest = RequestRegisterExpenseJsonBuilder.Build();
             expenseRequest.Title = title;
 
@@ -47,7 +46,7 @@ namespace Validators.Tests.Expenses.Register
         public void Error_PaymentType_Invalid()
         {
             // Arrange
-            var validator = new RegisterExpenseValidator();
+            var validator = new ExpenseValidator();
             var expenseRequest = RequestRegisterExpenseJsonBuilder.Build();
             expenseRequest.PaymentType = (EnumPaymentType)700;
 
@@ -67,7 +66,7 @@ namespace Validators.Tests.Expenses.Register
         public void Error_Amount_Invalid(decimal amount)
         {
             // Arrange
-            var validator = new RegisterExpenseValidator();
+            var validator = new ExpenseValidator();
             var expenseRequest = RequestRegisterExpenseJsonBuilder.Build();
             expenseRequest.Amount = amount;
 
@@ -84,7 +83,7 @@ namespace Validators.Tests.Expenses.Register
         public void Error_Date_Invalid()
         {
             // Arrange
-            var validator = new RegisterExpenseValidator();
+            var validator = new ExpenseValidator();
             var expenseRequest = RequestRegisterExpenseJsonBuilder.Build();
             expenseRequest.Date = DateTime.UtcNow.AddDays(1);
 

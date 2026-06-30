@@ -26,7 +26,7 @@ namespace CashFlow.Infrastructure.DataAccess.Repositories
 
         public async Task<Expense?> GetById(long id)
         {
-            return await _dbContext.Expenses.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
+            return await _dbContext.Expenses.FirstOrDefaultAsync(x => x.Id == id);
         }
 
         public async Task<bool> Delete(long id)
@@ -38,6 +38,11 @@ namespace CashFlow.Infrastructure.DataAccess.Repositories
 
             _dbContext.Expenses.Remove(result);
             return true;
+        }
+
+        public void Update(Expense expense)
+        {
+            _dbContext.Expenses.Update(expense);
         }
     }
 }
