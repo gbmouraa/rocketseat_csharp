@@ -44,5 +44,19 @@ namespace CashFlow.Infrastructure.DataAccess.Repositories
         {
             _dbContext.Expenses.Update(expense);
         }
+
+        public async Task<List<Expense>> FilterByMonth(DateOnly date)
+        {
+            var daysInMonth = DateTime.DaysInMonth(year: date.Year, month: date.Month);
+
+            var startDate = new DateTime(year: date.Year, month: date.Month, day: 1).Date;
+            var endDate = new DateTime(year: date.Year, month: date.Month, day: daysInMonth, hour: 23, minute: 59, second: 59);
+
+            return await _dbContext.Expenses
+                                    .AsNoTracking()
+                                    .Where(expense => expense.Date >= startDate && expense.Date <= endDate)
+                                    .OrderByDescending(expense => expense.Date)
+                                    .ToListAsync();
+        }
     }
 }

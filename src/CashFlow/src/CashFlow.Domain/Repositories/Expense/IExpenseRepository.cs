@@ -7,5 +7,6 @@
         Task<Entities.Expense?> GetById(long id);
         Task<bool> Delete(long id);
         void Update(Entities.Expense expense);
+        Task<List<Entities.Expense>> FilterByMonth(DateOnly month);
     }
 }
