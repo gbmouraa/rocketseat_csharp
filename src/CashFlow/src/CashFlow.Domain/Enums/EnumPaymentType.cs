@@ -1,10 +1,12 @@
-﻿namespace CashFlow.Domain.Enums
+﻿using System.ComponentModel;
+
+namespace CashFlow.Domain.Enums
 {
     public enum EnumPaymentType
     {
-        Cash = 0,
-        CreditCard = 1,
-        DebitCard = 2,
-        EletronicTransation = 3,
+        [Description("Dinheiro")] Cash = 0,
+        [Description("Cartão de Crédito")] CreditCard = 1,
+        [Description("Cartão de Débito")] DebitCard = 2,
+        [Description("Transação Eletrônica")] EletronicTransation = 3,
     }
 }
