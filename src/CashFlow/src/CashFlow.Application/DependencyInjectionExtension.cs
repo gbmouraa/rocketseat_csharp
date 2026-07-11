@@ -3,6 +3,7 @@ using CashFlow.Application.UseCases.Expenses.Delete;
 using CashFlow.Application.UseCases.Expenses.GetAll;
 using CashFlow.Application.UseCases.Expenses.GetById;
 using CashFlow.Application.UseCases.Expenses.Register;
+using CashFlow.Application.UseCases.Expenses.Reports.Excel;
 using CashFlow.Application.UseCases.Expenses.Update;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -25,6 +26,7 @@ namespace CashFlow.Application
             service.AddScoped<IGetExpenseByIdUseCase, GetExpenseByIdUseCase>();
             service.AddScoped<IDeleteExpenseUseCase, DeleteExpenseUseCase>();
             service.AddScoped<IUpdateExpenseUseCase, UpdateExpenseUseCase>();
+            service.AddScoped<IGenerateExpenseReportExcelUseCase, GenerateExpenseReportExcelUseCase>();
         }
 
         private static void AddAutoMapper(IServiceCollection service)
