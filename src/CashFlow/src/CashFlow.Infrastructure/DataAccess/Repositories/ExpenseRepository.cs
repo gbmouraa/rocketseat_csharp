@@ -49,7 +49,7 @@ namespace CashFlow.Infrastructure.DataAccess.Repositories
         {
             var daysInMonth = DateTime.DaysInMonth(year: date.Year, month: date.Month);
 
-            var startDate = new DateTime(year: date.Year, month: date.Month, day: 1).Date;
+            var startDate = new DateTime(year: date.Year, month: date.Month, day: 1).Date; // .Date no final faz com que seja o horario 00:00:00 da respectiva data
             var endDate = new DateTime(year: date.Year, month: date.Month, day: daysInMonth, hour: 23, minute: 59, second: 59);
 
             return await _dbContext.Expenses

@@ -20,7 +20,7 @@ namespace CashFlow.Application.UseCases.Expenses.Reports.Excel
             if (expenses.Count == 0)
                 return [];
 
-            var wookbook = new XLWorkbook();
+            using var wookbook = new XLWorkbook();
             wookbook.Author = "Gabriel Moura";
             wookbook.Style.Font.FontSize = 12;
 
@@ -34,11 +34,16 @@ namespace CashFlow.Application.UseCases.Expenses.Reports.Excel
                 worksheet.Cell($"A{row}").Value = expense.Title;
                 worksheet.Cell($"B{row}").Value = expense.Date;
                 worksheet.Cell($"C{row}").Value = expense.PaymentType.GetDescription();
+
                 worksheet.Cell($"D{row}").Value = expense.Amount;
+                worksheet.Cell($"D{row}").Style.NumberFormat.Format = "- R$ #,##0.00";
+
                 worksheet.Cell($"E{row}").Value = expense.Description;
 
                 row++;
             }
+
+            worksheet.Columns().AdjustToContents();
 
             var file = new MemoryStream(); // meio que é uma classe para salvar arquivos temporariamente em memoria
             wookbook.SaveAs(file);
