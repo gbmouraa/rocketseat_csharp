@@ -1,5 +1,7 @@
 ﻿using CashFlow.Application.UseCases.Expenses.Reports.Pdf.Fonts;
 using CashFlow.Domain.Repositories.Expense;
+using MigraDoc.DocumentObjectModel;
+using MigraDoc.Rendering;
 using PdfSharp.Fonts;
 
 namespace CashFlow.Application.UseCases.Expenses.Reports.Pdf
@@ -11,7 +13,7 @@ namespace CashFlow.Application.UseCases.Expenses.Reports.Pdf
         public GenerateExpenseReportPdfUseCase(IExpenseRepository repository)
         {
             _repository = repository;
-            
+
             GlobalFontSettings.FontResolver = new ExpenseReportFontResolver(); // define somente no uso desse useCase
         }
 
@@ -22,8 +24,65 @@ namespace CashFlow.Application.UseCases.Expenses.Reports.Pdf
             if (expenses.Count == 0)
                 return [];
 
+            var document = CreateDocument(month);
+            var page = CreatePage(document);
 
-            return [];
+            var paragraph = page.AddParagraph();
+            var title = $"Total gasto em {month.ToString("Y")}";
+
+            paragraph.AddFormattedText(title, new Font { Name = FontHelper.RALEWAY_REGULAR, Size = 15 });
+            paragraph.AddLineBreak(); // quebra de linha
+
+            var totalExpenses = expenses.Sum(expense => expense.Amount);
+            paragraph.AddFormattedText($"{totalExpenses} R$", new Font { Name = FontHelper.WORKSANS_BLACK, Size = 50 });
+
+            return RenderDocument(document);
+        }
+
+        private Document CreateDocument(DateOnly month)
+        {
+            var document = new Document();
+
+            document.Info.Title = $"Despesas para {month.ToString("Y")}";
+            document.Info.Author = "Gabriel M";
+
+            // define a fonte padrao para o documento
+            var style = document.Styles["Normal"];
+            style!.Font.Name = FontHelper.RALEWAY_REGULAR;
+
+            return document;
+        }
+
+        private Section CreatePage(Document document)
+        {
+            // pagina
+            var section = document.AddSection();
+            section.PageSetup = document.DefaultPageSetup.Clone();
+
+            section.PageSetup.PageFormat = PageFormat.A4;
+
+            section.PageSetup.LeftMargin = 40;
+            section.PageSetup.RightMargin = 40;
+            section.PageSetup.BottomMargin = 80;
+            section.PageSetup.TopMargin = 80;
+
+            return section;
+        }
+
+        private byte[] RenderDocument(Document document)
+        {
+            // cria renderizador para o doc
+            var renderer = new PdfDocumentRenderer
+            {
+                Document = document,
+            };
+
+            renderer.RenderDocument();
+
+            using var file = new MemoryStream();
+            renderer.PdfDocument.Save(file);// salva o doc na memoria da maquina
+
+            return file.ToArray();
         }
     }
 }
