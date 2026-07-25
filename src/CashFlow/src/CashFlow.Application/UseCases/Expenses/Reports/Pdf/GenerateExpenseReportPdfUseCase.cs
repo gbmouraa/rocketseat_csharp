@@ -14,7 +14,7 @@ namespace CashFlow.Application.UseCases.Expenses.Reports.Pdf
         {
             _repository = repository;
 
-            GlobalFontSettings.FontResolver = new ExpenseReportFontResolver(); // define somente no uso desse useCase
+            GlobalFontSettings.FontResolver = new ExpenseReportFontResolver(); // define somente no escopo desse useCase
         }
 
         public async Task<byte[]> Execute(DateOnly month)
@@ -27,7 +27,21 @@ namespace CashFlow.Application.UseCases.Expenses.Reports.Pdf
             var document = CreateDocument(month);
             var page = CreatePage(document);
 
+            var table = page.AddTable();
+            table.AddColumn();
+            table.AddColumn("300"); // 300px
+
+            var row = table.AddRow();
+            row.Cells[0].AddImage("C:\\Users\\Gabriel\\OneDrive\\Imagens\\icon.png");
+            row.Cells[1].AddParagraph("Hey, Gabriel M.");
+            row.Cells[1].Format.Font = new Font { Name = FontHelper.RALEWAY_BLACK, Size = 16 };
+            row.Cells[1].VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Center;
+
+
+
             var paragraph = page.AddParagraph();
+            paragraph.Format.SpaceBefore = "40";
+            paragraph.Format.SpaceAfter = "40";
             var title = $"Total gasto em {month.ToString("Y")}";
 
             paragraph.AddFormattedText(title, new Font { Name = FontHelper.RALEWAY_REGULAR, Size = 15 });
