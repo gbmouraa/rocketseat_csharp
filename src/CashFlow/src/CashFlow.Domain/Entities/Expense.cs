@@ -10,5 +10,9 @@ namespace CashFlow.Domain.Entities
         public DateTime Date { get; set; }
         public decimal Amount { get; set; }
         public EnumPaymentType PaymentType { get; set; }
+
+        // Definindo o relaciomanento (Doc do EF no site da Microsoft: https://learn.microsoft.com/en-us/ef/core/modeling/relationships)
+        public long UserId { get; set; }
+        public User User { get; set; } = default!;
     }
 }
