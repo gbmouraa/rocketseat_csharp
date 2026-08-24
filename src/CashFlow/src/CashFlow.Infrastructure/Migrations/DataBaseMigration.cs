@@ -1,7 +1,6 @@
 ﻿using CashFlow.Infrastructure.DataAccess;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace CashFlow.Infrastructure.Migrations
 {

@@ -1,5 +1,6 @@
 ﻿using CashFlow.Domain.Repositories;
 using CashFlow.Domain.Repositories.Expense;
+using CashFlow.Domain.Repositories.User;
 using CashFlow.Infrastructure.DataAccess.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -18,6 +19,7 @@ namespace CashFlow.Infrastructure.DataAccess
         private static void AddRepositories(IServiceCollection service)
         {
             service.AddScoped<IExpenseRepository, ExpenseRepository>();
+            service.AddScoped<IUserRepository, UserRepository>();
             service.AddScoped<IUnitOfWork, UnitOfWork>();
         }
 
