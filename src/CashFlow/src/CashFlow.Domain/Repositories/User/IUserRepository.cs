@@ -3,5 +3,6 @@
     public interface IUserRepository
     {
         Task Register(Entities.User user);
+        Task<bool> EmailExists(string email);
     }
 }

@@ -1,7 +1,9 @@
 ﻿using CashFlow.Domain.Repositories;
 using CashFlow.Domain.Repositories.Expense;
 using CashFlow.Domain.Repositories.User;
+using CashFlow.Domain.Security;
 using CashFlow.Infrastructure.DataAccess.Repositories;
+using CashFlow.Infrastructure.Security;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -14,6 +16,7 @@ namespace CashFlow.Infrastructure.DataAccess
         {
             AddRepositories(service);
             AddDbContext(service, config);
+            service.AddScoped<IPasswordEncript, PasswordEncript>();
         }
 
         private static void AddRepositories(IServiceCollection service)

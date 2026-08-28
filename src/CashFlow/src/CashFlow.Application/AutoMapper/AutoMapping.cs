@@ -13,7 +13,12 @@ namespace CashFlow.Application.AutoMapper
             EntityToResponse();
         }
 
-        private void RequestToEntity() => CreateMap<RequestExpenseJson, Expense>();
+        private void RequestToEntity()
+        {
+            CreateMap<RequestExpenseJson, Expense>();
+            CreateMap<RegisterUserJson, User>()
+                .ForMember(dest => dest.Password, config => config.Ignore());
+        }
 
         private void EntityToResponse()
         {
