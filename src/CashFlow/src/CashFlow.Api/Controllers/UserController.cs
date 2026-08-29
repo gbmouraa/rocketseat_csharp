@@ -1,5 +1,6 @@
 ﻿using CashFlow.Application.UseCases.User.Register;
 using CashFlow.Communication.Requests;
+using CashFlow.Communication.Responses;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CashFlow.Api.Controllers
@@ -8,13 +9,14 @@ namespace CashFlow.Api.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
-        //ActionResult<Usuario> melhor opcao para tipar um endpoint quando se sabe o retorno
-
         [HttpPost]
-        public async Task<IActionResult> Register([FromBody] RegisterUserJson request, [FromServices] IRegisterUserUseCase useCase)
+        [ProducesResponseType(typeof(ResponseUserCreated), StatusCodes.Status201Created)]
+        [ProducesResponseType(typeof(ResponseErrorMessageJson), StatusCodes.Status400BadRequest)]
+        //melhor opcao para tipar um endpoint quando se sabe o retorno
+        public async Task<ActionResult<ResponseUserCreated>> Register([FromBody] RegisterUserJson request, [FromServices] IRegisterUserUseCase useCase)
         {
             var result = await useCase.Execute(request);
-            return Ok(result);
+            return Created(string.Empty, result);
         }
     }
 }
